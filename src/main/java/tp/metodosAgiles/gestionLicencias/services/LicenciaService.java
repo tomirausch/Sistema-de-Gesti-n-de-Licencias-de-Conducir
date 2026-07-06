@@ -27,7 +27,6 @@ public class LicenciaService {
     // Inyecto el Repositorio de Licencias para poder realizar consultas a la base de datos
     @Autowired
     private LicenciaRepository licenciaRepository;
-    // --------------------------------------------------
 
     public boolean validarEdadMinima(LocalDate fechaNacimiento, String claseSolicitada) {
         int edad = calcularEdad(fechaNacimiento);
