@@ -24,7 +24,7 @@ public class LicenciaService {
     @Autowired
     private TitularService titularService;
 
-    // Inyecto el Repositorio de Licencias para (T-03) [Mirko]
+    // Inyecto el Repositorio de Licencias para poder realizar consultas a la base de datos
     @Autowired
     private LicenciaRepository licenciaRepository;
     // --------------------------------------------------
@@ -116,7 +116,7 @@ public class LicenciaService {
         };
     }
 
-    // H1 -> (T-03): Método para validar historial Clase B [Mirko]
+    // Método para validar historial Clase B 
     public boolean validarHistorialProfesional(Long titularId, String claseSolicitada) {
         if (!claseSolicitada.matches("[CDE]")) {
             return true;
@@ -203,8 +203,7 @@ public class LicenciaService {
             throw new RuntimeException("La licencia actual aún está vigente y no hay modificación de datos.");
         }
 
-        // 2. Buscamos la última licencia para copiar los datos (usando el mismo método
-        // del Ruso)
+        // 2. Buscamos la última licencia para copiar los datos 
         Licencia licenciaAnterior = licenciaRepository
                 .findFirstByTitular_NroDocumentoOrderByFechaVencimientoDesc(nroDocumento)
                 .orElseThrow(() -> new RuntimeException("El titular no posee licencias"));
@@ -242,8 +241,7 @@ public class LicenciaService {
 
     public List<LicenciaDTO> buscarLicenciasVigentesConFiltros(String nombre, String apellido, String grupoSanguineo,
             String factorRh, Boolean donante) {
-        // Ejecutamos la consulta en la BD pasando la fecha actual para garantizar la
-        // vigencia
+        // Ejecutamos la consulta en la BD pasando la fecha actual para garantizar la vigencia
         List<Licencia> vigentes = licenciaRepository.findLicenciasVigentesByFiltros(
                 LocalDate.now(), nombre, apellido, grupoSanguineo, factorRh, donante);
 
